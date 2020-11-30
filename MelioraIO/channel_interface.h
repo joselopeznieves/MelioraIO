@@ -179,7 +179,10 @@ void ADCInit(void){
         // Enable ADC channel
         //
 
+        ADCChannelEnable(ADC_BASE, ADC_CH_0);
+        ADCChannelEnable(ADC_BASE, ADC_CH_1);
         ADCChannelEnable(ADC_BASE, ADC_CH_2);
+        ADCChannelEnable(ADC_BASE, ADC_CH_3);
 }
 
 //****************************************************************************
@@ -198,13 +201,20 @@ int ReadDigitalInput(int channel){
 
     switch(channel){
         case 0:
-            in_buffer = (GPIOPinRead(GPIOA0_BASE, 0x20) >> 5);
+            //Pin 50 - D In 0
+            in_buffer = (GPIOPinRead(GPIOA0_BASE, 0x1));
             break;
         case 1:
+            //Pin 55 - D In 1
+            in_buffer = (GPIOPinRead(GPIOA0_BASE, 0x2) >> 1);
             break;
         case 2:
+            //Pin 61 - D In 2
+            in_buffer = (GPIOPinRead(GPIOA0_BASE, 0x40) >> 6);
             break;
         case 3:
+            //Pin 62 - D In 3
+            in_buffer = (GPIOPinRead(GPIOA0_BASE, 0x80) >> 7);
             break;
     }
 
@@ -229,20 +239,32 @@ void WriteDigitalOutput(int channel, int state){
 
     switch(channel){
         case 0:
+            //Pin 63 - D Out 0 - Wet Contact
             if(state)
-                GPIOPinWrite(GPIOA2_BASE, 0x40, 0x40);
+                GPIOPinWrite(GPIOA1_BASE, 0x1, 0x1);
             else
-                GPIOPinWrite(GPIOA2_BASE, 0x40, 0);
+                GPIOPinWrite(GPIOA1_BASE, 0x1, 0);
             break;
         case 1:
+            //Pin 3 - D Out 1 - Wet Contact
+            if(state)
+                GPIOPinWrite(GPIOA1_BASE, 0x10, 0x10);
+            else
+                GPIOPinWrite(GPIOA1_BASE, 0x10, 0);
             break;
         case 2:
+            //Pin 4 - D Out 2 - Dry Contact
             if(state)
-                GPIOPinWrite(GPIOA1_BASE, 0x4, 0x4);
+                GPIOPinWrite(GPIOA1_BASE, 0x20, 0x20);
             else
-                GPIOPinWrite(GPIOA1_BASE, 0x4, 0);
+                GPIOPinWrite(GPIOA1_BASE, 0x20, 0);
             break;
         case 3:
+            //Pin 5 - D Out 3 - Dry Contact
+            if(state)
+                GPIOPinWrite(GPIOA1_BASE, 0x40, 0x40);
+            else
+                GPIOPinWrite(GPIOA1_BASE, 0x40, 0);
             break;
     }
 }
@@ -261,19 +283,29 @@ float ReadAnalogInput(int channel){
 
     unsigned long adc_out = 0;
     float adc_voltage = 0;
+    unsigned int adc_channel;
 
     switch(channel){
         case 0:
-            adc_out = ADCFIFORead(ADC_BASE, ADC_CH_2);
-            adc_voltage = (((float)((adc_out >> 2 ) & 0x0FFF))*1.5)/4096;
+            //Pin 57 - A In 0
+            adc_channel = ADC_CH_0;
             break;
         case 1:
+            //Pin 58 - A In 1
+            adc_channel = ADC_CH_1;
             break;
         case 2:
+            //Pin 59 - A In 2
+            adc_channel = ADC_CH_2;
             break;
         case 3:
+            //Pin 60 - A In 3
+            adc_channel = ADC_CH_3;
             break;
     }
+
+    adc_out = ADCFIFORead(ADC_BASE, adc_channel);
+    adc_voltage = (((float)((adc_out >> 2 ) & 0x0FFF))*1.5)/4096;
 
     return adc_voltage;
 }
