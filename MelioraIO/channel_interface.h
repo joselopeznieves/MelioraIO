@@ -96,9 +96,10 @@ void SetupTimerPWMMode(unsigned long ulBase, unsigned long ulTimer,
 //! \param none
 //!
 //! This function sets up the folowing
-//!    1. TIMERA2 (TIMER B) as RED of RGB light
-//!    2. TIMERA3 (TIMER B) as YELLOW of RGB light
-//!    3. TIMERA3 (TIMER A) as GREEN of RGB light
+//!    1. TIMERA1 (TIMER A) as Pin 21 (A Out 2)
+//!    2. TIMERA2 (TIMER B) as Pin 64 (A Out 0)
+//!    3. TIMERA3 (TIMER A) as Pin 1 (A Out 3)
+//!    4. TIMERA3 (TIMER B) as Pin 2 (A Out 1)
 //!
 //! \return None.
 //
@@ -107,16 +108,38 @@ void InitPWMModules(){
     //
     // Initialization of timers to generate PWM output
     //
+    PRCMPeripheralClkEnable(PRCM_TIMERA1, PRCM_RUN_MODE_CLK);
     PRCMPeripheralClkEnable(PRCM_TIMERA2, PRCM_RUN_MODE_CLK);
+    PRCMPeripheralClkEnable(PRCM_TIMERA3, PRCM_RUN_MODE_CLK);
+
 
     //
-    // TIMERA2 (TIMER B) as RED of RGB light. GPIO 9 --> PWM_5
+    // TIMERA1 (TIMER A) as PWM_2 in Pin 21 (A Out 2)
+    //
+    SetupTimerPWMMode(TIMERA1_BASE, TIMER_A,
+            (TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PWM | TIMER_CFG_B_PWM), 1);
+    //
+    // TIMERA2 (TIMER B) as PWM_5 in Pin 64 (A Out 0)
     //
     SetupTimerPWMMode(TIMERA2_BASE, TIMER_B,
             (TIMER_CFG_SPLIT_PAIR | TIMER_CFG_B_PWM), 1);
+    //
+    // TIMERA3 (TIMER A) as PWM_6 in Pin 1 (A Out 3)
+    //
+    SetupTimerPWMMode(TIMERA3_BASE, TIMER_A,
+            (TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PWM | TIMER_CFG_B_PWM), 1);
+    //
+    // TIMERA3 (TIMER A) as PWM_7 in Pin 2 (A Out 1)
+    //
+    SetupTimerPWMMode(TIMERA3_BASE, TIMER_B,
+            (TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PWM | TIMER_CFG_B_PWM), 1);
 
+
+
+    TimerEnable(TIMERA1_BASE,TIMER_A);
     TimerEnable(TIMERA2_BASE,TIMER_B);
-
+    TimerEnable(TIMERA3_BASE,TIMER_A);
+    TimerEnable(TIMERA3_BASE,TIMER_B);
 }
 
 //****************************************************************************
