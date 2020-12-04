@@ -356,15 +356,15 @@ void WriteAnalogOutput(int channel, float voltage){
             UpdateDutyCycle(TIMERA2_BASE, TIMER_B, compare);
             break;
         case 1:
+            UpdateDutyCycle(TIMERA3_BASE, TIMER_B, compare);
             break;
         case 2:
+            UpdateDutyCycle(TIMERA1_BASE, TIMER_A, compare);
             break;
         case 3:
+            UpdateDutyCycle(TIMERA3_BASE, TIMER_A, compare);
             break;
     }
 }
-
-
-
 
 

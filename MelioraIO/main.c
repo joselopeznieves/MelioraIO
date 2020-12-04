@@ -56,52 +56,28 @@ int main(void)
     PinMuxConfig();
     InitPWMModules();
     ADCInit();
-    InitTerm();
 
 
-    Report("Reading From Digital Input...\n\r");
-    Report("Read: %d\n\r", ReadDigitalInput(0));
-    UtilsDelay(DELAY);
-
-    Report("Reading Digital Input...\n\r");
-    Report("Read: %d\n\r", ReadDigitalInput(0));
-    UtilsDelay(DELAY);
-
-    Report("Writing 1 to Digital Output (Wet)...\n\r");
     WriteDigitalOutput(0, 1);
-    UtilsDelay(DELAY);
-
-    Report("Writing 0 to Digital Output (Wet)...\n\r");
+    UtilsDelay(80000000);
+    WriteDigitalOutput(1, 1);
+    UtilsDelay(80000000);
     WriteDigitalOutput(0, 0);
-    UtilsDelay(DELAY);
+    UtilsDelay(80000000);
+    WriteDigitalOutput(1, 0);
+    UtilsDelay(80000000);
+    WriteAnalogOutput(1, 0);
+    UtilsDelay(80000000);
+    WriteAnalogOutput(3, 0);
+    UtilsDelay(80000000);
 
-    Report("Writing 1 to Digital Output (Dry)...\n\r");
-    WriteDigitalOutput(2, 1);
-    UtilsDelay(DELAY);
+    WriteAnalogOutput(3, 0);
+    UtilsDelay(80000000);
+    WriteAnalogOutput(1, 0);
+    UtilsDelay(80000000);
 
-    Report("Writing 0 to Digital Output (Dry)...\n\r");
-    WriteDigitalOutput(2, 0);
-    UtilsDelay(DELAY);
 
-    Report("Reading Analog Input...\n\r");
-    Report("\n\rVoltage is %f\n\r", ReadAnalogInput(0));
-    UtilsDelay(DELAY);
 
-    Report("Reading Analog Input...\n\r");
-    Report("\n\rVoltage is %f\n\r", ReadAnalogInput(0));
-    UtilsDelay(DELAY);
-
-    Report("Writing 0V to Analog Output...\n\r");
-    WriteAnalogOutput(0, 0);
-    UtilsDelay(DELAY);
-
-    Report("Writing 12V to Analog Output...\n\r");
-    WriteAnalogOutput(0, 12);
-    UtilsDelay(DELAY);
-
-    Report("Writing 24V to Analog Output...\n\r");
-    WriteAnalogOutput(0, 24);
-    UtilsDelay(DELAY);
 
 
 	return 0;
