@@ -328,7 +328,7 @@ float ReadAnalogInput(int channel){
     }
 
     adc_out = ADCFIFORead(ADC_BASE, adc_channel);
-    adc_voltage = (((float)((adc_out >> 2 ) & 0x0FFF))*1.5)/4096;
+    adc_voltage = (((float)((adc_out >> 2 ) & 0x0FFF))*1.465)/4096;
 
     return adc_voltage;
 }

@@ -58,27 +58,25 @@ int main(void)
     ADCInit();
 
 
-    WriteDigitalOutput(0, 1);
-    UtilsDelay(80000000);
-    WriteDigitalOutput(1, 1);
-    UtilsDelay(80000000);
-    WriteDigitalOutput(0, 0);
-    UtilsDelay(80000000);
-    WriteDigitalOutput(1, 0);
-    UtilsDelay(80000000);
+    WriteAnalogOutput(0, 0);
+    WriteAnalogOutput(0, 6);
+    WriteAnalogOutput(0, 12);
+    WriteAnalogOutput(0, 24);
+
     WriteAnalogOutput(1, 0);
-    UtilsDelay(80000000);
-    WriteAnalogOutput(3, 0);
-    UtilsDelay(80000000);
+    WriteAnalogOutput(1, 6);
+    WriteAnalogOutput(1, 12);
+    WriteAnalogOutput(1, 24);
+
+    WriteAnalogOutput(2, 0);
+    WriteAnalogOutput(2, 6);
+    WriteAnalogOutput(2, 12);
+    WriteAnalogOutput(2, 24);
 
     WriteAnalogOutput(3, 0);
-    UtilsDelay(80000000);
-    WriteAnalogOutput(1, 0);
-    UtilsDelay(80000000);
-
-
-
-
+    WriteAnalogOutput(3, 6);
+    WriteAnalogOutput(3, 12);
+    WriteAnalogOutput(3, 24);
 
 	return 0;
 
